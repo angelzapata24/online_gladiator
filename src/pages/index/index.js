@@ -28,5 +28,22 @@ this.attack = function attack(this, other) {
 
     }
 
+}
+
+this.health = function heal(this) {
+    if (self.health >= 100) {
+        console.log('\nCan not heal over 100 health!\n')
+    }
+    else {
+        console.log('\n')
+        if (this.rage <= 10){
+            console.log('\nYou do not have enough Rage to heal.\n')
         }
+        else {
+            this.rage = self.rage - 10
+            self.health = min(100, this.health + 20)
+        }
+    }
+
+}
 
