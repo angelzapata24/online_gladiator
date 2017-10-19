@@ -6,8 +6,8 @@ const STATE = {
     turn: 1
 };
 
-var gladiator_1 = Gladiator('Edgar', 100, 25);
-var gladiator_2 = Gladiator('Angel', 100, 25);
+var gladiator_1 = Gladiator('Edgar', 100, 25, 10, 25);
+var gladiator_2 = Gladiator('Angel', 100, 25, 10, 25);
 
 function randInt(damage_low, damage_high) {
     return damage_low + Math.floor(Math.random() * (damage_high - damage_low));
@@ -22,6 +22,7 @@ function Gladiator(name, health, rage, damage_high, damage_low) {
     gladiator.damage_high = damage_high;
 
     gladiator.attack = function attack(other) {
+        console.log(this, other);
         if (gladiator.rage < randInt(0, 100)) {
             var lost = randInt(gladiator.damage_low, gladiator.damage_high);
             other.health -= lost;
@@ -54,15 +55,31 @@ function Gladiator(name, health, rage, damage_high, damage_low) {
             }
         }
     };
-
-    gladiator.dead = function is_dead() {
-        if (gladiator.health <= 0) {
-            return true;
-        } else {
-            return false;
-        }
-    };
     return gladiator;
+}
+
+function gladiator_1dead() {
+    appRoot.html(
+        '<button onclick="document.location.reload()">' +
+            gladiator_1.name +
+            ',Loses! </br> Restart </button>'
+    );
+}
+
+function gladiator_2dead() {
+    appRoot.html(
+        '<button onclick="document.location.reload()">' +
+            gladiator_2.name +
+            ',Loses! </br> Restart </button>'
+    );
+}
+
+function is_dead() {
+    if (gladiator_1.health <= 0) {
+        gladiator_1dead();
+    } else if (gladiator_2.health <= 0) {
+        gladiator_2dead();
+    }
 }
 
 function viewButtons() {
@@ -118,18 +135,22 @@ function view_2() {
 function attachHandlers() {
     $('#Attack').click(function() {
         gladiator_1.attack(gladiator_2);
+        STATE.turn = 2;
         draw();
     });
     $('#Heal').click(function() {
         gladiator_1.heal();
+        STATE.turn = 2;
         draw();
     });
     $('#Attack2').click(function() {
         gladiator_2.attack(gladiator_1);
+        STATE.turn = 1;
         draw();
     });
     $('#Heal2').click(function() {
         gladiator_2.heal();
+        STATE.turn = 1;
         draw();
     });
 }
@@ -137,6 +158,7 @@ function attachHandlers() {
 function draw() {
     appRoot.html(view() + view_2());
     attachHandlers();
+    is_dead();
 }
 
 function main() {
