@@ -6,8 +6,8 @@ const STATE = {
     turn: 1
 };
 
-var gladiator_1 = Gladiator('Edgar', 100, 25, 10, 25);
-var gladiator_2 = Gladiator('Angel', 100, 25, 10, 25);
+var gladiator_1 = Gladiator('Player 1', 200, 25, 10, 25);
+var gladiator_2 = Gladiator('Player 2', 200, 25, 10, 25);
 
 function randInt(damage_low, damage_high) {
     return damage_low + Math.floor(Math.random() * (damage_high - damage_low));
@@ -43,7 +43,7 @@ function Gladiator(name, health, rage, damage_high, damage_low) {
     };
 
     gladiator.heal = function heal() {
-        if (gladiator.health >= 100) {
+        if (gladiator.health >= 200) {
             console.log('\nCan not heal over 100 health!\n');
         } else {
             console.log('\n');
@@ -51,7 +51,7 @@ function Gladiator(name, health, rage, damage_high, damage_low) {
                 console.log('\nYou do not have enough Rage to heal.\n');
             } else {
                 gladiator.rage = gladiator.rage - 10;
-                gladiator.health = Math.min(100, gladiator.health + 20);
+                gladiator.health = Math.min(200, gladiator.health + 20);
             }
         }
     };
@@ -62,7 +62,9 @@ function gladiator_1dead() {
     appRoot.html(
         '<button onclick="document.location.reload()">' +
             gladiator_1.name +
-            ',Loses! </br> Restart </button>'
+            ', Loses!!! Winner is ' +
+            gladiator_2.name +
+            '</br> Restart </button>'
     );
 }
 
@@ -70,7 +72,9 @@ function gladiator_2dead() {
     appRoot.html(
         '<button onclick="document.location.reload()">' +
             gladiator_2.name +
-            ',Loses! </br> Restart </button>'
+            ', Loses!!! Winner is ' +
+            gladiator_1.name +
+            '</br> Restart </button>'
     );
 }
 
@@ -116,18 +120,18 @@ function viewButtons2() {
 
 function view() {
     return [
-        '<h3>' + 'Name: ' + gladiator_1.name + '</h3>',
-        '<h3>' + 'Health: ' + gladiator_1.health + '</h3>',
-        '<h3>' + 'Rage: ' + gladiator_1.rage + '</h3>',
+        '<h3> Name: ' + gladiator_1.name + '</h3>',
+        '<h3> Health: ' + gladiator_1.health + '</h3>',
+        '<h3> Rage: ' + gladiator_1.rage + '</h3>',
         viewButtons()
     ].join('');
 }
 
 function view_2() {
     return [
-        '<h3>' + 'Name: ' + gladiator_2.name + '</h3>',
-        '<h3>' + 'Health: ' + gladiator_2.health + '</h3>',
-        '<h3>' + 'Rage: ' + gladiator_2.rage + '</h3>',
+        '<h3> Name: ' + gladiator_2.name + '</h3>',
+        '<h3> Health: ' + gladiator_2.health + '</h3>',
+        '<h3> Rage: ' + gladiator_2.rage + '</h3>',
         viewButtons2()
     ].join('');
 }
